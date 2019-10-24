@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>PasteMe CI/D Status</title>
+        <script src="https://cdn.staticfile.org/vue/2.6.10/vue.min.js"></script>
+        <script src="https://cdn.staticfile.org/axios/0.19.0/axios.min.js"></script>
+        <style>pre { white-space: normal; }</style>
+    </head>
+    <body>
+        <div id="app">
+            <pre v-for="item in items" v-bind:key="item.id">
+                {{ item.name }}&nbsp;{{ item.date }}
+            </pre>
+        </div>
+    </body>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                items: [
+                    {
+                        name: "Pub PasteMe Frontend",
+                        url: "https://status.pasteme.lucien.ink/pasteme/frontend/pub",
+                        date: ""
+                    },
+                    {
+                        name: "Pub PasteMe Backend ",
+                        url: "https://status.pasteme.lucien.ink/pasteme/frontend/pub",
+                        date: ""
+                    },
+                    {
+                        name: "Pre PasteMe Frontend",
+                        url: "https://status.pasteme.lucien.ink/pasteme/frontend/pre",
+                        date: ""
+                    },
+                    {
+                        name: "Pre PasteMe Backend ",
+                        url: "https://status.pasteme.lucien.ink/pasteme/backend/pre",
+                        date: ""
+                    },
+                    {
+                        name: "Dev PasteMe Frontend",
+                        url: "https://status.pasteme.lucien.ink/pasteme/frontend/dev",
+                        date: ""
+                    },
+                    {
+                        name: "Dev PasteMe Backend ",
+                        url: "https://status.pasteme.lucien.ink/pasteme/backend/dev",
+                        date: ""
+                    }
+                ]
+            },
+            mounted() {
+                for (let i = 0; i < this.items.length; i++) {
+                    axios.get(this.items[i].url).then(response => {
+                        this.items[i].date = response.data.time;
+                    })
+                }
+            }
+        })
+    </script>
+</html>
